@@ -1,0 +1,141 @@
+\documentclass[a4paper, 12pt, UTF8, heading=true, scheme=chinese]{ctexart}
+
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb,bm,graphicx,xcolor,tikz,array,booktabs,multicol,multirow,titlesec,hyperref,biblatex,algorithm2e,listings,mathtools}
+
+%\titleformat{\section}
+%  {\normalfont\Large\bfseries\raggedright}
+%  {}
+%  {0pt}
+%  {}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\st}{\text{s.t.}}
+
+\newenvironment{solution}{\par\noindent\textbf{解：}\par}{\hfill$\square$\par}
+\newenvironment{proof}{\par\noindent\textbf{证明：}}{\hfill$\square$\par}
+\newenvironment{problem}[1][]{\par\noindent\textbf{问题 }\textmd{#1}\par}{}
+
+\linespread{1.5}
+
+\title{\textbf{群 与 Galois 理论 \\ 练习}}
+\author{陈宏泰 \\ 2024011131 \\ 清华大学数学科学系 \\ \texttt{cht24@mails.tsinghua.edu.cn}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{群论}
+
+\begin{problem}[1.]
+    对于群 $G$，$a,b\in G$，假如有 $a^5=e$，$a^3b=ba^3$，求证 $ab=ba$。
+\end{problem}
+
+\begin{proof}
+    从 $ab = aeb$ 开始，利用 $a^5 = e$，我们有：
+    $$
+    ab = aeb = a(a^5)b = a^6b 
+    $$
+    再利用 $a^3b = ba^3$，可以得到：
+    $$
+    ab = a^6b = a^3(a^3b) = a^3(ba^3) = (a^3b)a^3 = (ba^3)a^3 = ba^6 = ba(a^5) = bea = ba
+    $$
+    因此 $ab = ba$。
+\end{proof}
+
+\begin{problem}[2.]
+    1. 对于有限群 $G$，$H\subset G$ 是真子群，请证明
+    $$
+    G \neq \bigcup_{g\in G} gHg^{-1}
+    $$
+    如果是无限群，这个结果还正确吗？\\
+    2.对于有限群$G$，其传递地作用在有$n$个元素的有限集$X$上，其中$n > 1$，请证明存在$g \in G$
+    使得其在$X$上没有不动点。
+\end{problem}
+
+\begin{proof}
+1. 对于有限群的情况，考虑共轭子群的并集的大小。设 $|G| = n$，$|H| = m$，则 $|gHg^{-1}| = m$。
+
+由于 $H$ 是真子群，$m < n$。所有共轭子群的并集最多包含：
+$$
+\left|\bigcup_{g\in G} gHg^{-1}\right| \leq 1 + (n/m)(m - 1) < n
+$$
+因此 $G \neq \bigcup_{g\in G} gHg^{-1}$。
+
+对于无限群，这个结果不一定成立。例如，考虑无限循环群 $G = \langle a \rangle$ 和子群 $H = \langle a^2 \rangle$，则：
+$$
+\bigcup_{g\in G} gHg^{-1} = \bigcup_{k\in\Z} a^k \langle a^2 \rangle a^{-k} = \langle a^2 \rangle \neq G
+$$
+但存在其他无限群使得等式成立的情况。
+\end{proof}
+
+\begin{problem}
+    记$[n]={1,2,\ldots,n}$,请证明$S_6$不能传递地作用在$[7]$上。$S_7$能否传递地作用在$[8]$上呢？
+\end{problem}
+
+\begin{proof}
+    
+\end{proof}
+
+\newpage
+
+\section{环论部分}
+
+\begin{problem}
+确定环同态的同态核：
+$$
+\Z[x] \rightarrow \C \quad f(x) \rightarrow f(\sqrt{2} + \sqrt{3} + \sqrt{5})
+$$
+它是主理想吗？
+\end{problem}
+
+\begin{solution}
+首先需要找到 $\alpha = \sqrt{2} + \sqrt{3} + \sqrt{5}$ 的极小多项式。
+
+计算 $\alpha$ 的幂次：
+\begin{align*}
+\alpha^2 &= 2 + 3 + 5 + 2(\sqrt{6} + \sqrt{10} + \sqrt{15}) = 10 + 2(\sqrt{6} + \sqrt{10} + \sqrt{15}) \\
+\alpha^4 &= (\alpha^2)^2 = \cdots
+\end{align*}
+通过计算可得极小多项式为 $x^4 - 10x^2 + 1$。
+
+因此同态核为 $\ker = (x^4 - 10x^2 + 1)$，这是一个主理想。
+\end{solution}
+
+\begin{problem}
+对于 $A = \R[X, Y]/(X^2 + Y^2 - 1)$，证明 $A$ 不是唯一分解整环。
+\end{problem}
+
+\begin{proof}
+考虑元素 $x$ 和 $y$（$X$ 和 $Y$ 在商环中的像）。则有：
+$$
+x^2 = 1 - y^2 = (1 - y)(1 + y)
+$$
+但 $x$ 是不可约元，且 $1-y$ 和 $1+y$ 也不是 $x$ 的相伴元，因此 $A$ 不是唯一分解整环。
+\end{proof}
+
+\section{Galois 理论部分}
+
+\begin{problem}
+请证明多项式 $x^4 + 3x + 3$ 在 $\Q[\sqrt[3]{2}]$ 上不可约。
+\end{problem}
+
+\begin{proof}
+设 $\alpha$ 是 $x^4 + 3x + 3$ 的一个根。考虑域扩张：
+$$
+[\Q(\alpha, \sqrt[3]{2}) : \Q] = [\Q(\alpha, \sqrt[3]{2}) : \Q(\sqrt[3]{2})] \cdot [\Q(\sqrt[3]{2}) : \Q]
+$$
+由于 $[\Q(\sqrt[3]{2}) : \Q] = 3$，只需证明 $[\Q(\alpha, \sqrt[3]{2}) : \Q(\sqrt[3]{2})] = 4$。
+
+假设 $x^4 + 3x + 3$ 在 $\Q(\sqrt[3]{2})$ 上可约，则它会有次数为 1 或 2 的因子。但通过计算模不同素数可以验证这是不可能的，因此该多项式不可约。
+\end{proof}
+
+\end{document}

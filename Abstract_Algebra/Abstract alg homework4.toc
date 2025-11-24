@@ -1,0 +1,2 @@
+\contentsline {section}{\numberline {1}A. 最少生成元的个数}{2}{section.1}%
+\contentsline {section}{\numberline {2}B. 阶为$p^3$ 的群有5个, $p\neq 2$}{7}{section.2}%

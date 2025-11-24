@@ -1,0 +1,559 @@
+\documentclass[a4paper, 12pt, UTF8, heading=true, scheme=chinese]{ctexart}
+
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb,bm,graphicx,xcolor,tikz,array,booktabs,multicol,multirow,titlesec,hyperref,biblatex,algorithm2e,listings,mathtools,tikz-cd}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\raggedright}
+  {}
+  {0pt}
+  {}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\st}{\text{s.t.}}
+
+\newenvironment{solution}{\par\noindent\textbf{解：}\par}{\hfill$\square$\par}
+\newenvironment{proof}{\par\noindent\textbf{证明：}}{\hfill$\square$\par}
+\newenvironment{problem}[1][]{\par\noindent\textmd{#1}\par}{}
+\newenvironment{note}{\par\noindent\textbf{注：}}{\par}
+\newenvironment{tip}{\par\noindent\textbf{提示：}}{\par}
+
+\linespread{1.5}
+
+\title{\textbf{群 与 Galois 理论 \\ 作业4}}
+\author{陈宏泰 \\ 2024011131 \\ 清华大学数学科学系 \\ \texttt{cht24@mails.tsinghua.edu.cn}}
+\date{\today}
+
+\begin{document}
+
+\maketitle 
+
+\tableofcontents
+\newpage
+
+\section{A. 最少生成元的个数}
+
+    $G$ 是群，如果存在有限个 $x_1, \cdots, x_n$ ，使得 $G=\left\langle x_1, \cdots, x_n\right\rangle$ ，我们就称 $G$ 是有限生成的。以上最小可能的 $n$ 被称作是 $G$ 的最少的生成元个数，记作 $\min _{\text {gen }}(G)$ 。我们规定 $\min _{\text {gen }}(\{1\})=0$ 。
+
+    \begin{problem}[A1)]
+        证明， $\min _{\text {gen }}(G)=1$ 等价于 $G$ 是非平凡的循环群。
+    \end{problem}
+
+    \begin{proof}
+        若$\text{min}_\text{gen}(G)=1$, 那么$G=\langle x \rangle$, 其中$x\neq1$. 
+        那么$G=\{x^r\mid r\in\Z\}$, $G$是非平凡的循环群.
+        
+        若$G$是非平凡的循环群, 那么$\exists\ x\neq1\in G, \st\ G=\{x^r\mid r\in\Z\}$, 从而$G=\langle x \rangle$.
+        即$\text{min}_\text{gen}(G)=1$.
+    \end{proof}
+
+    \begin{note}
+        这实在是显然的.
+    \end{note}
+
+    \begin{problem}[A2)]
+        假设 $n \geqslant 3$ 。证明， $\min _{\text {gen }}\left(\mathfrak{S}_n\right)=2$ 。
+    \end{problem}
+
+    \begin{proof}
+        由课上内容知$\mathfrak{S}_n=\langle (12), (12\cdots n)\rangle$. 于是$\text{min}_\text{gen}(G)\leqslant2$.
+        
+        又由$\mathfrak{S}_n$非平凡的循环群, 知$\text{min}_\text{gen}(G)\neq1$.于是$\text{min}_\text{gen}(G)=2$.
+    \end{proof}
+
+    \begin{problem}[A3)]
+        $p$ 是素数，$r$ 是自然数，$G=(\mathbb{Z} / p \mathbb{Z})^r=\underbrace{\mathbb{Z} / p \mathbb{Z} \times \cdots \times \mathbb{Z} / p \mathbb{Z}}_{r \text { 个 }}$ 。证明， $\min _{\text {gen }}(G)=r$ 。 （提示：将 $G$ 视为 $\mathbb{Z} / p \mathbb{Z}$－线性空间）
+    \end{problem}
+
+    \begin{proof}
+        将$G$视为$\Z/p\Z$-线性空间, 那么其维数为$r$, 等价于其一组基有$r$个元素. 
+        并且由基的定义可知, $G$不可被$r-1$个元素生成. 于是$\text{min}_\text{gen}(G)=r$.
+    \end{proof}
+
+    \begin{problem}[A4)]
+        $G$ 是有限生成群，假设有满的群同态 $\varphi: G \longrightarrow G^{\prime}$ 。证明，$G^{\prime}$ 是有限生成群并且
+        $$
+        \text{min}_{\text {gen }}\left(G^{\prime}\right) \leqslant \text{min}_{\text {gen }}(G).
+        $$
+    \end{problem}
+
+    \begin{proof}
+        假设$G=\langle x_1,x_2,\cdots,x_n\rangle$, 其中$n=\text{min}_\text{gen}(G)$. 
+        由于$\varphi$是满同态, 于是
+        $$
+        G'=\varphi(G)=\varphi\langle x_1,x_2,\cdots,x_n\rangle=\langle \varphi(x_1),\varphi(x_2),\cdots,\varphi(x_n)\rangle.
+        $$
+        从而$G'$是有限生成的且$\text{min}_\text{gen}(G')\leqslant n=\text{min}_\text{gen}(G)$.
+    \end{proof}
+
+    \begin{problem}[A5)]
+        $G$ 是群，$H \triangleleft G$ 是正规子群。证明，如果 $H$ 和 $G / H$ 是有限生成的，那么，$G$ 也是并且
+        $$
+        \text{min}_{\text {gen }}(G) \leqslant \text{min}_{\text {gen }}(G / H)+\text{min}_{\text {gen }}(H).
+        $$
+    \end{problem}
+
+    \begin{proof}
+        设$H=\langle x_1,x_2,\cdots,x_{n_1}\rangle, G/H=\langle y_1H,y_2H,\cdots,y_{n_2}H\rangle$,
+        其中$n_1=\text{min}_\text{gen}(H), n_2=\text{min}_\text{gen}(G/H)$.
+
+        于是$\forall\ g\in G, g\in yH$, 而其中$yH\in \langle y_1H,y_2H,\cdots,y_{n_2}H\rangle$.
+        从而通过适当取左陪集的代表元, 有$\forall\ yH\in G/H$, 有$g\in \langle y_1,y_2,\cdots,y_{n_2} \rangle$.
+        又由$g\in yH$, 知$\exists\ h\in H, \st\ g=yh$, 而$h\in H=\langle x_1,x_2,\cdots,x_{n_1}\rangle$,
+        于是$g\in \langle x_1,x_2,\cdots,x_{n_1},y_1,y_2,\cdots,y_{n_2}\rangle$.
+
+        于是$G\subset \langle x_1,x_2,\cdots,x_{n_1},y_1,y_2,\cdots,y_{n_2}\rangle$, 从而
+        $\text{min}_\text{gen}(G)\leqslant n_1+n_2=\text{min}_\text{gen}(H)+\text{min}_\text{gen}(G/H)$.
+    \end{proof}
+
+    \begin{problem}[A6)]
+        对于群 $A=\prod_{i=1}^s \mathbb{Z} / d_i \mathbb{Z}$ ，
+        其中，$s \in \mathbb{Z}_{\geqslant 1}, d_1, \cdots, d_s \in \mathbb{Z}_{\geqslant 2}$ ，
+        使得 $d_s\mid d_{s-1}, d_{s-1}\mid  d_{s-2}, \cdots, d_2 \mid d_1$。
+        证明， $\min _{\text {gen }}(A)=s$.
+    \end{problem}
+
+    \begin{note}
+        有typo: $d_s\mid d_1$应该为$d_s\mid d_{s-1}$.
+    \end{note}
+
+    \begin{proof}
+        首先证明$\text{min}_\text{gen}(A)\leqslant s$: 取标准基
+        $$
+        e_1=(\underbrace{1,0,\cdots,0}_{s\text{个}}),e_2=(0,1,\cdots,0),\cdots,e_s=(0,0,\cdots,1).
+        $$
+        那么$A=\langle e_1,e_2,\cdots,e_s\rangle$, 从而$\text{min}_\text{gen}(A)\leqslant s$.
+
+        再证明$\text{min}_\text{gen}(A)\geqslant s$: 假设$A$可以有$r$个生成元生成, 即存在$g_1,g_2,\cdots,g_r,\st$
+        $$
+        A=\langle g_1,g_2,\cdots,g_r\rangle.
+        $$ 
+        
+        由$d_i\geqslant2$, 知$\exists\ p$为素数, $\st\ p\mid d_1$, 
+        又$d_s\mid d_{s-1}, d_{s-1} \mid  d_{s-2}, \cdots, d_2 \mid d_1$, 
+        从而$p\mid d_i,\forall\ 1\leqslant i\leqslant s$.
+        考虑群同态$\varphi$:
+        $$
+        A=\prod_{i=1}^s \mathbb{Z} / d_i \mathbb{Z}\to (\Z/p\Z)^n,\quad (a_1,a_2,\cdots,a_s)\mapsto(a_1\bmod p,a_2\bmod p,\cdots,a_s\bmod p).
+        $$
+        由于$p\mid d_i,\forall\ 1\leqslant i\leqslant s$, 群同态是良定义的. 又显然有$\text{Ker}\ \varphi=pA\coloneqq\{(pa_1,pa_2,\cdots,pa_s)\mid (a_1,a_2,\cdots,a_s)\in A\}$, $\text{Im}\ \varphi=(\Z/p\Z)^n$. 由第一同构定理有
+        $$
+        A/pA\simeq (\Z/p\Z)^n.
+        $$
+
+        $A=\langle g_1,g_2,\cdots,g_r\rangle\Rightarrow A/pA=\langle g_1(pA),g_2(pA),\cdots,g_r(pA)\rangle$. 又由于同构, 可将$A/pA$视为$\mathbb{F}_p$-线性空间. 由线性空间存在基, 以及基的定义可知$r\geqslant s$, 即$\text{min}_\text{gen}(A)\geqslant s$.
+
+        综上, $\text{min}_\text{gen}(A)=s$.
+    \end{proof}
+    
+    \begin{problem}[A7)]
+        对于群 $A=\mathbb{Z}^r=\underbrace{\mathbb{Z} \times \cdots \times \mathbb{Z}}_{r \text { 个 }}$ 。证明， $\min _{\text {gen }}(A)=r$ 。据此证明，如果 $\mathbb{Z}^r \simeq \mathbb{Z}^{r^{\prime}}$ ，那么，$r=r^{\prime}$ 。
+    \end{problem}
+
+    \begin{proof}
+        $\text{min}_\text{gen}(A)=r$的证明思路与A6)完全相同.
+
+        若$\varphi: \mathbb{Z}^r \xrightarrow{\simeq} \mathbb{Z}^{r^{\prime}}$, 那么取$\mathbb{Z}^r=\langle g_1,g_2,\cdots,g_r\rangle$, 则有$\mathbb{Z}'=\langle \varphi(g_1),\varphi(g_2),\cdots,\varphi(g_r)\rangle$. 从而$r\geqslant r'$. 同理有$r\leqslant r'$. 最终有$r=r'$.
+    \end{proof}
+
+    \begin{note}
+        生成元的构造相同. 对于素数$p$的选取是任意的.
+    \end{note}
+    
+    \begin{problem}[A8)]
+        （子群生成元个数可以更多）对任意的 $n \geqslant 3$ ，给出如下的例子：$G$ 是群，$H<G$ 是子群， $\min _{\operatorname{gen}}(G)=2$而 $\min _{\text {gen }}(H)=n$ 。
+    \end{problem}
+
+    \begin{proof}
+        直接给出置换群的例子:
+
+        考虑$\mathfrak{S}_{2n}$, 由课上结论可知$\mathfrak{S}_{2n}=\langle (12),(12\cdots (2n))\rangle$. 故$\min_\text{gen}(\mathfrak{S}_{2n})=2$. 其有子群$H=\langle (12),(34),\cdots,(2n-1,2n)\rangle$, 注意到$H$中的非单位元都是2阶的, 从而同构于$(\Z/2\Z)^n$, 由A6)知$\min_\text{gen}(H)=\min_\text{gen}((\Z/2\Z)^n)=n$. 从而$G=\mathfrak{S}_n,H$符合条件.
+    \end{proof}
+
+    \begin{note}
+        关于非单位元都是2阶的群. 可以推出此群
+        \begin{itemize}
+            \item 是交换群;
+            \item 同构于$(\Z/2\Z)^n$.
+        \end{itemize}
+        前者是容易证明的, 又由于群是交换的, 可以证明其是$\mathbb{F}_2$-线性空间, 后者得证.
+
+        最主要的是上课已经充分论证过了.
+    \end{note}
+    
+    \begin{problem}[A9)]
+        （有限生成群的子群未必有限生成）令 $G=\left\langle\left(\begin{array}{ll}1 & 1 \\ 0 & 1\end{array}\right),\left(\begin{array}{ll}2 & 0 \\ 0 & 1\end{array}\right)\right\rangle<\mathbf{G L}(2 ; \mathbb{Q})$ 是由两个元素生成的群。证明，$H=\left\{\left(\begin{array}{cc}1 & \frac{m}{2^k} \\ 0 & 1\end{array}\right) \middle\rvert \ k \in \mathbb{Z}_{\geqslant 0}, m \in \mathbb{Z}\right\}$ 是 $G$ 的子群并且不是有限生成的。
+    \end{problem}
+
+    \begin{proof}
+        先证明$H$是$G$的子群:
+        \begin{itemize}
+            \item $H\subset G$:
+            计算可知:
+            $$
+            A^n=\begin{pmatrix} 2^n&0 \\ 0&1 \end{pmatrix},\quad 
+            A^{-n}=\begin{pmatrix} 2^{-n}&0 \\ 0&1 \end{pmatrix},\quad 
+            A^{n}BA^{-n}=\begin{pmatrix} 1&2^n \\ 0&1 \end{pmatrix}, \ 
+            \text{其中 } n\in \Z.
+            $$
+            故$\begin{pmatrix} 1&2^n \\ 0&1 \end{pmatrix}\in H$, 其中$n\in \Z$, 即得$H\subset G$
+            
+            \item $H$是$G$的子群
+            $$
+            \begin{pmatrix}1 & \frac{m}{2^k} \\ 0 & 1\end{pmatrix}
+            \begin{pmatrix}1 & \frac{n}{2^l} \\ 0 & 1\end{pmatrix}^{-1}=
+            \begin{pmatrix}1 & \frac{2^lm-2^kn}{2^{k+l}} \\ 0 & 1\end{pmatrix}\in H
+            $$
+        \end{itemize}
+        反证法, 若$H$为有限生成的, 则存在$S=\left\{\begin{pmatrix} 1&\frac{m_1}{2^{k_1}} \\ 0&1 \end{pmatrix},\begin{pmatrix} 1&\frac{m_2}{2^{k_2}} \\ 0&1 \end{pmatrix},\cdots,\begin{pmatrix} 1&\frac{m_n}{2^{k_n}} \\ 0&1 \end{pmatrix}\right\}$, 其中$m_i\in \Z,k_i\in \Z_{\geqslant0}$, 使得$H=\langle S \rangle$. 
+        而$\langle S \rangle\simeq \langle \frac{m_1}{2^{k_1}}, \frac{m_2}{2^{k_2}}, \cdots \frac{m_n}{2^{k_n}}\rangle_{(\Q,+)}$, 
+        因为$$\begin{pmatrix} 1&a \\ 0&1 \end{pmatrix}\begin{pmatrix} 1&b \\ 0&1 \end{pmatrix}=\begin{pmatrix} 1&a+b \\ 0&1 \end{pmatrix},\quad
+        \begin{pmatrix} 1&a \\ 0&1 \end{pmatrix}^{-1}=\begin{pmatrix} 1&-a \\ 0&1 \end{pmatrix},\quad a,b\in \Q.$$
+
+        设$N=\max_{1\leqslant i\leqslant n}\{k_i\}+1$的分母的最大公倍数, 则对$H$中的任意元素形如$\begin{pmatrix} 1&2^{-l} \\ 0&1 \end{pmatrix}, l>N$, 
+        $2^{-l}\notin \langle \frac{m_1}{2^{k_1}}, \frac{m_2}{2^{k_2}}, \cdots \frac{m_n}{2^{k_n}}\rangle_{(\Q,+)}$, 故$\begin{pmatrix} 1&2^{-l} \\ 0&1 \end{pmatrix}\notin \langle S \rangle$,
+        矛盾. 因此, $H$不是有限生成的.
+
+        综上, 有限生成的群的子群不一定是有限生成的.
+    \end{proof}
+
+    \begin{tip}
+        可以使用第一次作业
+
+        C5）（有限生成群之子群未必有限生成）考虑 $\mathbf{G L}(2 ; \mathbb{Q})$ 的子群 $G$ ，它由两个元素生成：$G=\left\langle\left(\begin{array}{ll}2 & 0 \\ 0 & 1\end{array}\right),\left(\begin{array}{ll}1 & 1 \\ 0 & 1\end{array}\right)\right\rangle$ 。令 $$
+        H=\{A \in G \mid A \text { 的对角线上的元素均为 } 1\} \text {. }
+        $$
+        证明，$H$ 是 $G$ 的子群并且 $H$ 不是有限生成的。
+    \end{tip}
+    
+    \begin{problem}[A10)]
+        （有限生成交换群子群的生成元个数）$G$ 是有限生成交换群，$H<G$ 是子群。证明，
+        $$
+        \text{min}_{\text {gen }}(H) \leqslant \text{min}_{\text {gen }}(G).
+        $$   
+    \end{problem}
+
+    \begin{tip}
+        找一个 $g \in G$ ，使得 $\min _{\text {gen }}(G /\langle g\rangle)<\min _{\text {gen }}(G)$
+    \end{tip}
+
+    \begin{proof}
+        若$\text{min}_{\text{gen}}(G)=0$, 结论平凡。
+        若$\text{min}_{\text{gen}}(G)=1$, 那么由A1)立即得到$G$为循环群, 从而其子群$H$平凡或为循环群, 则$\text{min}_{\text{gen}}(H)=0$或1, 结论成立.
+
+        现进行归纳, 假设对于所有$\text{min}_{\text{gen}}(G)<n$的情况结论成立, 现讨论$\text{min}_{\text{gen}}(G)=n$的情况. 
+        设$G$的一组生成元为为$\{g_1,g_2,\cdots g_n\}$. 不妨取$g=g_n$, 那么$G/\langle g\rangle$的一组生成元为$\{g_1\langle g\rangle,g_2\langle g\rangle,\cdots,g_{n-1}\langle g\rangle\}$, 可知$\text{min}_{\text{gen}}(G/\langle g\rangle)\leqslant n-1$.
+
+        由第二同构定理, 有$H/(\langle g\rangle\cap H)\simeq \langle g\rangle H/\langle g\rangle$. 那么可由归纳假设知
+        $$
+        \text{min}_{\text{gen}}(H/(\langle g\rangle\cap H))=\text{min}_{\text{gen}}\langle g\rangle H/\langle g\rangle\leqslant \text{min}_{\text{gen}}(G/\langle g\rangle)\leqslant n-1.
+        $$
+        而再考虑$\langle g\rangle\cap H$. 若$\langle g\rangle\cap H$非平凡, 则由于循环群的非平凡子群都为循环群, $\langle g\rangle\cap H$为循环群, 从而$\text{min}_{\text{gen}}(\langle g\rangle\cap H)=1$, 再由A5)
+        $$
+        \text{min}_{\text{gen}}(H)\leqslant \text{min}_{\text{gen}}(H/(\langle g\rangle\cap H))+\text{min}_{\text{gen}}(\langle g\rangle\cap H)\leqslant (n-1)+1=n.
+        $$
+        从而
+        $$
+        \text{min}_{\text {gen }}(H) \leqslant \text{min}_{\text {gen }}(G).
+        $$
+
+        以上过程可用如下正合列的交换图表示.
+        $$
+        \begin{tikzcd}
+        1 \arrow[r] & \langle g\rangle \arrow[r, hook] & G \arrow[r, two heads,"\pi"]  & G/\langle g\rangle \arrow[r]  & 1 \\
+        1 \arrow[r] & \langle g\rangle\cap H \arrow[r, hook] \arrow[u, hook] & H \arrow[r, two heads,"\pi"] \arrow[u, hook] & H/(\langle g\rangle\cap H) \arrow[r] \arrow[u,hook] & 1
+        \end{tikzcd}
+        $$
+    \end{proof}
+    
+    \begin{problem}[A11)]
+        $r \geqslant 1, A$ 是 $\mathbb{Z}^r$ 的子群。证明，存在 $r^{\prime} \leqslant r$ ，使得 $A \simeq \mathbb{Z}^{r^{\prime}}$。
+    \end{problem}
+
+    \begin{proof}
+        由A10), $\text{min}_{\text{gen}}(A)=r'\leqslant r$. $A$是有限生成的, 又由于$\Z^r$是交换群, 故$A$也是交换群. 
+        由有限生成群的分类定理, $A\simeq\Z^{r'-s}\times \prod_{i=1}^s \Z/d_i\Z$, 其中$s\geqslant0, d_i\geqslant2$. 若$s\neq0$, 则$A$中将有有限阶的非单位元, 这与$\Z^r$中仅有单位元为有限阶矛盾. 故$s=0$, 即$A\simeq\Z^{r'}$.        
+    \end{proof}  
+
+    \begin{note}
+        以下是一个错误的证明, 因为给出的映射是不是良定义的.
+
+        由A10), $\text{min}_{\text{gen}}(A)=r'\leqslant r$.
+
+        取$A$的一组生成元$\{a_1,a_2,\cdots,a_{r'}\}$, 那么$A=\langle a_1,a_2,\cdots,a_{r'}\rangle$. 
+        考虑群同态$\varphi$:
+        $$
+        A\to \Z^r,\quad a=\sum_{i=1}^{r'}k_ia_i\mapsto (k_1,k_2,\cdots,k_{r'}),
+        $$
+        这显然是满同态. 而如果$\varphi(a)=0$, 那么$a=0\Rightarrow \text{Ker}\ \varphi=\{0\}$, 从而$\varphi$是单同态. 所以$\varphi$为同构, 有$A \simeq \mathbb{Z}^{r^{\prime}}$.
+
+        因此也可以看出验证良定义的必要性.
+    \end{note}
+
+\newpage
+
+\section{B. 阶为\texorpdfstring{$p^3$}. 的群有5个, \texorpdfstring{$p\neq 2$}.}
+
+    \begin{problem}[B1)]
+        在同构意义下，写下所有阶为 $2^3$ 的群和阶为 $p^2$ 的群。
+    \end{problem}
+
+    \begin{proof}
+        阶为$2^3=8$的群: 循环群$\Z/8\Z$, $\Z/4\Z/\times\Z/2Z$, $(\Z/2\Z)^3$, 二面体群$\mathbf{D}_4$, 四元数群$\mathbf{Q}_8$.
+
+        阶为$p^2$的群: $\Z/p^2\Z, \Z/p\Z\times\Z/p\Z$.
+    \end{proof}
+
+    \begin{problem}[B2)]
+        我们在课上用对角线均为 1 的上三角矩阵给出了 $\mathbf{G L}\left(2 ; \mathbb{F}_p\right)$ 一个 Sylow 子群。计算 $\mathbf{G L}\left(2 ; \mathbb{F}_p\right)$ 中 Sylow $p-$ 子群的个数。
+    \end{problem}
+
+    \begin{proof}
+        首先进行一些抽象, 考虑群$G$和其Sylow $p$-子群构成的集合$S$, 那么由Sylow定理, 我们可以有自然的共轭作用
+        $$
+        G\times S\to S, \quad (g,H)\mapsto gHg^{-1},
+        $$
+        并且这个作用是传递的. 由轨道计数公式, 可知$|S|=\frac{|G|}{|\text{Stab}(H)|}$, 其中$H\in S$. 而由于这是共轭作用, $\text{Stab}(H)=\{g\in G\mid gHg^{-1}=H\}=\text{N}_G(H)$. 从而$|S|=\frac{|G|}{|\text{N}_G(H)|}$.
+
+        而$|\mathbf{GL}(2,\mathbb{F})|=p(p-1)^2(p+1)$, 记$\mathcal{J}_1$对角线均为 1 的上三角矩阵所构成的子集. 只需要计算$\text{N}_G(\mathcal{J}_1)$即可.
+
+        注意到$\mathcal{J}_1$是循环群, 生成元是$\begin{pmatrix}1 & 1 \\0 & 1\end{pmatrix}$, 故若$\begin{pmatrix} a&b\\c&d \end{pmatrix}\in \text{N}_G(\mathcal{J}_1)$, 那么只需要满足
+        $$
+        \begin{pmatrix} a&b\\c&d \end{pmatrix}\begin{pmatrix}1 & 1 \\0 & 1\end{pmatrix}\begin{pmatrix} a&b\\c&d \end{pmatrix}^{-1}=\begin{pmatrix}1 & k \\0 & 1\end{pmatrix},
+        $$
+        即可, 其中$k\in \{0,1,\cdots,p-1\}$. 直接计算, 有
+        $$
+        \begin{pmatrix} a&a+b\\c&c+d \end{pmatrix}=\begin{pmatrix} a+ck&b+kd\\c&d \end{pmatrix}.
+        $$
+        从而$c=0,a=kd$. 那么$\text{N}_G(\mathcal{J}_1)=\left\{\begin{pmatrix} a&b\\0&d \end{pmatrix}\middle\rvert a,d\in \mathbb{F}_p^\times, b\in\mathbb{F}_p\right\}$, 阶数为$p(p-1)^2$, 从而$\mathbf{G L}\left(2 ; \mathbb{F}_p\right)$ 中 Sylow $p$-子群的个数为$p+1$.
+    \end{proof}
+
+    \begin{problem}[B3)]
+        给定两个非平凡的群同态 $\varphi: \mathbb{Z} / p \mathbb{Z} \longrightarrow \mathbf{G L}\left(2 ; \mathbb{F}_p\right)$ 和 $\varphi^{\prime}: \mathbb{Z} / p \mathbb{Z} \longrightarrow \mathbf{G L}\left(2 ; \mathbb{F}_p\right)$ 。对任意的整数 $k$ ，令 $\varphi_k(x)=\varphi(k x)$ ，其中，$x \in \mathbb{Z} / p \mathbb{Z}$ 。证明，存在 $A \in \mathbf{G L}\left(2 ; \mathbb{F}_p\right)$ 和 $k=1,2, \cdots, p-1$ ，使得对任意的 $x \in \mathbb{Z} / p \mathbb{Z}$ ，有
+        $$
+        \varphi^{\prime}(x)=A \cdot \varphi_k(x) \cdot A^{-1}.
+        $$
+    \end{problem}
+
+    \begin{note}
+        这样的群同态$\varphi$是显然存在的. 如果认真写完这次作业能够立马构造一个.
+    \end{note}
+    \begin{proof}
+        由于$\varphi,\varphi'$是非平凡的, $|\text{Im}\ \varphi|=|\text{Im}\ \varphi'|=p$, 从而$\text{Im}\ \varphi, \text{Im}\ \varphi'$都是$\mathbf{G L}\left(2 ; \mathbb{F}_p\right)$的Sylow $p$-子群. 由Sylow定理知, $\exists A\in \mathbf{G L}\left(2 ; \mathbb{F}_p\right),\ \st\ \text{Im}\ \varphi'=A\cdot \text{Im}\cdot \varphi\ A^{-1}$.
+        于是$\forall\ x\in (\Z/p\Z)^\times, \exists\ k\in (\Z/p\Z)^\times, \st$
+        $$
+        \varphi'(x)=A\cdot\varphi(kx)\cdot A^{-1}=A\cdot\varphi_k(x)\cdot A^{-1},
+        $$
+        $k\neq 0$是由于$\varphi'(0)=\varphi(0)$. 又由$x$可以生成$\Z/p\Z$, 对任意$x\in \Z/p\Z$, 都有
+        $$
+        \varphi'(x)=A\cdot\varphi_k(x)\cdot A^{-1}.
+        $$
+    \end{proof}
+
+    \begin{problem}[B4)]
+        在同构的意义下，可能的半直积 $(\mathbb{Z} / p \mathbb{Z} \times \mathbb{Z} / p \mathbb{Z}) \rtimes_\psi \mathbb{Z} / p \mathbb{Z}$ 恰有两个。进一步证明，其中恰有一个是非交换群并且其中心同构于 $\mathbb{Z} / p \mathbb{Z}$ 。
+    \end{problem}
+
+    \begin{proof}
+        若$\psi$为平凡同态, $(\mathbb{Z} / p \mathbb{Z} \times \mathbb{Z} / p \mathbb{Z}) \rtimes_\psi \mathbb{Z} / p \mathbb{Z}\simeq (\Z/p\Z)^3$.
+
+        若$\psi$为非平凡同态, 有$\psi^p=1$.
+
+        先考虑$\text{Aut}(\Z/p\Z\times\Z/p\Z)$, 可以构造映射$\phi$:
+        $$
+        \mathbf{G L}\left(2 ; \mathbb{F}_p\right)\to\text{Aut}(\Z/p\Z\times\Z/p\Z), A\mapsto (x\mapsto xA),
+        $$
+        其中$x$为行向量. 因为
+        \begin{align*}
+        \phi(\mathbf{I})&=\text{Id}_{\Z/p\Z\times\Z/p\Z} \\
+        \phi(AB)&=(x\mapsto xAB)=(x\mapsto xA)(xA\mapsto xAB)=\phi(A)\phi(B),
+        \end{align*}
+        所以$\phi$为群同态. 若$\phi(A)=\text{Id}_{\Z/p\Z\times\Z/p\Z}$, $x=(1,0),(0,1)$, 即可得$A=\mathbf{I}$, 从而$\phi$为单射. 而$\forall\ \varphi\in \text{Aut}(\Z/p\Z\times\Z/p\Z)$, 其由$\varphi((1,0)),\varphi((0,1))$完全决定, 故有$\phi\left(\begin{pmatrix} \varphi((1,0)) \\ \varphi((0,1)) \end{pmatrix}\right)=\varphi$, $\phi$是满射. 从而$\phi$是同构, 有$\text{Aut}(\Z/p\Z\times\Z/p\Z)\simeq \mathbf{G L}\left(2 ; \mathbb{F}_p\right)$.
+
+        若存在另外一个满足条件的非平凡同构$\psi'$, 由B3)可知, 存在 $A \in \mathbf{G L}\left(2 ; \mathbb{F}_p\right)$ 和 $k=1,2, \cdots, p-1$ ，使得对任意的 $x \in \mathbb{Z} / p \mathbb{Z}, \st$
+        $$
+        \varphi^{\prime}(x)=A \cdot \varphi_k(x) \cdot A^{-1}.
+        $$
+        构造映射$\pi$:
+        \begin{align*}
+        (\mathbb{Z} / p \mathbb{Z} \times \mathbb{Z} / p \mathbb{Z}) \rtimes_{\psi'} \mathbb{Z} / p \mathbb{Z}&\to (\mathbb{Z} / p \mathbb{Z} \times \mathbb{Z} / p \mathbb{Z}) \rtimes_{\psi} \mathbb{Z} / p \mathbb{Z}, \\ (x,y)&\mapsto (Ax,ky).
+        \end{align*}
+        首先有
+        \begin{align*}
+        \pi(0)&=0,\\
+        \pi((x_1,y_1)(x_2,y_2))&=\pi((x_1+\psi(y_1)x_2,y_1+y_2)) \\
+        &=(A(x_1+\psi'(y_1)x_2),k(y_1+y_2))\\
+        &=(Ax_1+A\psi'(y_1)x_2,ky_1+ky_2)\\
+        &=(Ax_1+\psi_k(y_1)Ax_2,ky_1+ky_2)\\
+        &=(Ax_1+\psi(ky_1)Ax_2,ky_1+ky_2)\\
+        &=(Ax_1,ky_1)(Ax_2,ky_2)\\
+        &=\pi((x_1,y_1))\pi((x_2,y_2)),
+        \end{align*}
+        于是$\pi$是群同态. 若$\pi(x,y)=(Ax,ky)=(0,0)$, 则$x=A^{-1}\cdot0=0,y=k^{-1}\cdot0=0(A\text{可逆},k\neq 0)$, 于是$\pi$为单同态(满射同样容易验证). 两群阶由相等, 于是$\pi$为双射, 从而$\pi$是群同构. 在同构的意义下, 当$\psi$非平凡时, $\to (\mathbb{Z} / p \mathbb{Z} \times \mathbb{Z} / p \mathbb{Z}) \rtimes_{\psi} \mathbb{Z} / p \mathbb{Z}$只有一个.
+
+        在$(\Z/p\Z\times\Z/p\Z)\rtimes_\psi \Z/p\Z$中任取两元素$(x_1,y_1),(x_2,y_2)$, 有
+        \begin{align*}
+        (x_1,y_1)(x_2,y_2)=(x_1+\psi(y_1)x_2,y_1+y_2), \\
+        (x_2,y_2)(x_1,y_1)=(x_2+\psi(y_2)x_1,y_2+y_1).
+        \end{align*}
+        反证法: 如果其为交换群, 则$x_1+\psi(y_1)x_2=x_2+\psi(y_2)x_1\Rightarrow (\psi(y_2)-1)x_1=(\psi(y_1)-1)x_2$. 由于$x_1,x_2$是任意的, 于是有$(\psi(y_2)-1)=(\psi(y_1)-1)\Rightarrow \psi(y_2)=\psi(y_1),\forall\ y_1,y_2$, 而这意味着$\psi$是平凡的, 与假设矛盾.
+        于是其为非交换群.
+
+        考虑群$G=(\Z/p\Z\times\Z/p\Z)\rtimes_\psi \Z/p\Z$在自身上的共轭作用, $G$被划分为共轭类的无交并
+        $$
+        G=\coprod_{k=1}^m \text{Conj}(x_k).
+        $$
+        又由于轨道计数, 以及共轭类数目为1的元素属于群的中心, 于是
+        $$
+        |G|=\sum_{k=1}^m\text{Conj}(x_k)=|\mathrm{Z}(G)|+\sum_k \text{Conj}(x_k)=p^3.
+        $$
+        而$|\text{Conj}(x_k)|=\frac{|G|}{C_{x_k}(G)}$, 当$x_k\notin \mathrm{Z}(G)$时, 有$p\mid|\text{Conj}(x_k)|$. 于是$p\mid |\mathrm{Z}(G)|$. 而由$\mathrm{Z}$为$G$的真子群, 可知$|\mathrm{Z}|\leqslant \frac{1}{2}p^3$, 从而$|\mathrm{Z}(G)|=p$或者$p^2$. 若$\mathrm{Z}(G)$是$p^2$阶群, 那么$|G/\mathrm{Z}(G)|=p$, 这是循环群, 从而导出$G$交换, 矛盾. 若$\mathrm{Z}(G)$是$p$阶群, $p$素, 从而是循环群, 从而$\mathrm{Z}(G)\simeq \Z/p\Z$.
+
+
+    \end{proof}
+
+    \begin{note}
+        （交换性的一个有用判据）$G$ 是群。证明，$G$ 是交换群等价于 $G / \mathrm{Z}(G)$ 是循环群。
+    \end{note}
+
+    \begin{tip}
+        同样可构造
+        $\phi'$:
+        $$
+        \text{Aut}(\Z/p\Z\times\Z/p\Z)\to \mathbf{G L}\left(2 ; \mathbb{F}_p\right), \varphi\mapsto \begin{pmatrix} \varphi((1,0)) \\ \varphi((0,1)) \end{pmatrix}
+        $$
+        但群同态的证明稍麻烦.
+    \end{tip}
+
+    \begin{problem}[B5)]
+        $G$ 是群，$|G|=p^3$ 。假设 $G$ 不是循环群并且存在 $g \in G$ 使得 $\operatorname{ord}(g)=p^2$ 。证明，$\langle g\rangle \triangleleft G$。
+    \end{problem}
+
+    \begin{proof}
+        可知$[G:\langle H\rangle]=p$, 由Ore的定理, 可知$\langle g\rangle\triangleleft G$.
+    \end{proof}
+
+    \begin{note}
+        （Ore 的定理）$G$ 是有限群，$p$ 是 $|G|$ 的最小素因子，$H<G$ 是子群。如果其指标 $[G: H]=p$ ，证明， $H$ 是正规子群。
+    \end{note}
+
+    \begin{problem}[B6)]
+        证明，在同构的意义下，上一个小问题中的群恰好两个。
+    \end{problem}
+
+    \begin{proof}
+        若$G$是交换群, 则$G\simeq \Z/p^2\Z\times\Z/p\Z$.
+
+        若$G$是非交换群, 首先证明: $\exists\ a\notin G-\langle g\rangle,\st\ \text{ord}(a)=p$.
+
+        反证法: 假设$G\backslash \langle g\rangle$中没有$p$阶元.
+        $p$-群中心$\mathrm{Z}(G)$非平凡, 而$G$是非交换群, $\mathrm{Z}(G)\neq G$. 
+        若$\mathrm{Z}(G)=p^2$, 知$|G/\mathrm{Z}(G)|=p$, 从而是循环群, 从而由期中复习题(交换性的一个有用判据)知$G$是交换群, 矛盾. 故$\mathrm{Z}(G)=p$.
+        $\mathrm{Z}(G)$中都是$p$阶元, 从而$\mathrm{Z}(G)=\{1,g^p,g^{2p},\cdots,g^{(p-1)p}\}$.
+
+        由B5), $|G/\langle g\rangle|=p$, 从而是循环群.
+        $\exists h\in G\backslash \langle g\rangle,\st\ G/\langle g\rangle=\langle h\langle g\rangle\rangle$, 于是$h^p\langle g\rangle=\langle g\rangle\Rightarrow h^p\in \langle g\rangle$.
+        又$\text{ord}(h)=p^2\Rightarrow h^{p^2}=1, h^p\neq 1\Rightarrow (h^p)^p=1$, 于是$\exists\ 1\leqslant r\leqslant p-1,\st\ h^p=g^{rp}$.
+
+        又$|G/\mathrm{Z}(G)|=p^2$, 从而是交换群. 于是有
+        $$
+        h\mathrm{Z}(G)\cdot g\mathrm{Z}(G)=g\mathrm{Z}(G)\cdot h\mathrm{Z}(G),
+        $$
+        可推出$hgh^{-1}g^{-1}\in \mathrm{Z}(G)$, 从而$\exists\ s\in\Z,\st\ hgh^{-1}=g^{1+sp}$, 从而$\forall\ l\in\Z, hg^lh^{-1}=g^{l(1+sp)}$.
+
+        考虑$hg^{-r}$, 由于$hg^{-r}\notin\langle g\rangle$, 于是$\text{ord}(hg^{-r})=p^2$.
+        又有
+        \begin{align*}
+        (hg^{-r})^p&=(hg^{-r}h^{-1})(h^2g^{-r}h^{-2})\cdots(h^pg^{-r}h^{-p})h^{p} \\ 
+        &=g^{-r(1+sp)}g^{-r(1+sp)^2}\cdots g^{-r(1+sp)^p}g^{rp}\\
+        &=g^{r[p-\sum_{i=1}^{p}(1+sp)^i]}.
+        \end{align*}
+        而
+        $$
+        p-\sum_{i=1}^{p}(1+sp)^i\equiv p-\sum_{i=1}^{p}(1+isp)=-\sum_{i=1}^{p}isp=-\frac{s(p-1)}{2}p^2\equiv 0 \pmod{p^2}.
+        $$
+        于是
+        $$
+        (hg^{-r})^p=g^{r[p-\sum_{i=1}^{p}(1+sp)^i]}=1, 
+        $$
+        而这意味着$\text{ord}(hg^{-r})=p$, 矛盾! 于是$\exists\ a\notin G-\langle g\rangle,\st\ \text{ord}(a)=p$.
+
+        再考虑$\langle g\rangle, \langle a\rangle$, 其中$\langle g\rangle\triangleleft G$, 并且对于$a^k\in \langle a\rangle$, 如果$a^k\in \langle g\rangle$, 由Bezout定理, 知$\exists\ l\in \Z, \st\ a^{kl}=a^1=a\in \langle g\rangle$, 而这与$a$的取法矛盾. 于是$\langle g\rangle\cap\langle a\rangle=\{1\}$, 又显然$\langle g\rangle\langle a\rangle=G$, 于是
+        $$
+        G\simeq \langle g\rangle\rtimes\langle a\rangle.
+        $$
+        由半直积的唯一性, 这等价于说
+        $$
+        G\simeq \Z/p^2\Z\rtimes_\psi\Z/p\Z.
+        $$
+        其中$\psi:\Z/p\Z\to \text{Aut}(\Z/p^2\Z)$为群同态. 而$\psi$可以由$\psi(1)$完全决定. 而$\text{Aut}(\Z/p^2\Z)\simeq (\Z/p^2\Z)^\times$, 其阶为$p(p-1)$, 其中$p$素, 从而$\psi(1)$的像要么是平凡的, 要么是$p$阶子群的生成元. 
+
+        方法一: 直接考虑$G\simeq \langle g\rangle\rtimes\langle a\rangle$. (群作用为共轭作用)
+
+        从而可以考虑 $a g a^{-1}=g^k$ ，其中 $k \neq 1$ ，不然 $G$ 是交换群。于是我们有
+        $$
+        G=<a, g>\left(\operatorname{ord}(a)=p, \operatorname{ord}(g)=p^2, a g a^{-1}=g^k\right)
+        $$
+
+
+        而 $a^b g a^{-b}=g^{k^b}$ ，令 $b=p$ ，从而有 $g=g^{k^p}$ ，于是 $k^p=1\left(\bmod p^2\right)$ ，结合 $k \neq 1$ ，得到 $k$ 可生成乘法群 $\left(\mathbb{Z} / p^2 \mathbb{Z}\right)^{\times}$中的 $p$ 阶子群。
+
+        我们考虑 $G$ 的其它可能结构
+        $$
+        G^{\prime}=<a, g>\left(\operatorname{ord}(a)=p, \operatorname{ord}(g)=p^2, a g a^{-1}=g^{k^{\prime}}\right)
+        $$
+
+
+        同样的有 $k^{\prime}$ 是乘法群 $\left(\mathbb{Z} / p^2 \mathbb{Z}\right)^{\times}$中的 $p$ 阶子群的一个生成元，于是存在 $h, t \in\left(\mathbb{Z} / p^2 \mathbb{Z}\right)^{\times}$使得 $k^{\prime h}=k, k^t=k^{\prime}$ ，于得到是 $a g a^{-1}=g^{k^{\prime}}$ 和 $a^h g a^{-h}=g^k$等价。不难验证 $a^h, a$ 都是 $\langle a\rangle$ 的一个生成元，于是有
+        $$
+        G^{\prime}=<a^h, g>\left(\operatorname{ord}(a)=p, \operatorname{ord}(g)=p^2, a^h g a^{-h}=g^k\right)
+        $$
+
+
+        再用 $b=a^h$ 代入上式，即
+        $$
+        G^{\prime}=<b, g>\left(\operatorname{ord}(b)=p, \operatorname{ord}(g)=p^2, b g b^{-1}=g^k\right)
+        $$
+
+        此时可直接验证 $G^{\prime} \simeq G$ ，于是 $G$ 不交换时只有一种群结构。
+
+        方法二: 也可考虑$G\simeq \Z/p^2\Z\rtimes_\psi\Z/p\Z$. 由上面的分析, $\psi(1)$的像要么是平凡的, 要么是$p$阶子群的生成元. 而$(\Z/p^2\Z)^\times$中$p$阶子群唯一, 于是非平凡时$\psi$在同构意义下唯一. 从而在同构意义下, 非交换群结构唯一.
+    \end{proof}
+
+    \begin{note}
+        （交换性的一个有用判据）$G$ 是群。证明，$G$ 是交换群等价于 $G / \mathrm{Z}(G)$ 是循环群。
+        
+        阶为$p^2$的群为交换群, 这容易验证.
+
+
+    \end{note}
+
+    \begin{problem}[B7)]
+        在同构意义下，写下所有阶为 $p^3$ 的群。
+    \end{problem}
+
+    \begin{proof}
+        最后只需要补充证明: 当$G$中非循环群且不存在$p^2$阶元时, $G\simeq(\Z/p\Z\times\Z/p\Z)\rtimes_\psi \Z/p\Z$.
+
+        此时, $G$中非单位元都是$p$阶元.
+        由$p$-群中心非平凡, 可知$\mathrm{Z}(G)$非平凡. 故可取$a\in \mathrm{Z}(G)\backslash\{0\}$, 再取$b\in G\backslash \langle a\rangle$, 则$\langle a\rangle\cap\langle b\rangle=\{0\}$, 否则$\exists\ k\in \Z,\ \st\ b^k\in \langle a\rangle$, 由Bezout定理, 可知$\exists\ l\in \Z,\ \st\ b^{kl}=b\in \langle a\rangle$, 矛盾.
+        于是$\langle a,b\rangle=\{a^ib^j\mid0\leqslant i,j<p\}\simeq \Z/p\Z\times\Z/p\Z$.
+
+        再取$c\in G\backslash \langle a,b\rangle$, 则$\langle a\rangle\cap\langle c\rangle=\{0\}, \langle b\rangle\cap\langle c\rangle=\{0\}$, 同理可证.
+        于是$G=\langle a,b,c\rangle$, 并且$\langle a\rangle\langle b\rangle\cap\langle c\rangle=\{0\}$, 从而
+        $$
+        G\simeq (\Z/p\Z\times\Z/p\Z)\rtimes_\psi \Z/p\Z.
+        $$
+
+        由整个B题, 可知在同构意义下, 阶为$p^3$的群有5个: 
+        $$
+        \Z/p^3\Z, \Z/p^2\times\Z/p\Z, (\Z/p\Z)^3, (\Z/p\Z\times\Z/p\Z)\rtimes_\psi \Z/p\Z, (\Z/p^2\Z)\rtimes_\psi \Z/p\Z,
+        $$ 
+        其中$\psi$的作用非平凡.
+    \end{proof}
+
+\end{document}

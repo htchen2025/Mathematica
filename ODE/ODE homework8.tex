@@ -1,0 +1,444 @@
+\documentclass[a4paper, 12pt, UTF8, heading=true, scheme=chinese]{ctexart}
+
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb,bm,graphicx,xcolor,tikz,array,booktabs,multicol,multirow,titlesec,hyperref,biblatex,algorithm2e,listings,mathtools}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\raggedright}
+  {}
+  {0pt}
+  {}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\st}{\text{s.t.}}
+
+\newenvironment{solution}{\par\noindent\textbf{解: }}{\hfill$\square$\par}
+\newenvironment{proof}{\par\noindent\textbf{证明: }}{\hfill$\square$\par}
+\newenvironment{problem}[1][]{\par\noindent\textmd{#1}}{\par}
+\newenvironment{note}{\par\noindent\textbf{注: }}{\par}
+\newenvironment{tip}{\par\noindent\textbf{提示: }}{\par}
+
+\linespread{1.5}
+
+\title{\textbf{ODE \\ 第八次作业}}
+\author{陈宏泰 \\ 2024011131 \\ 清华大学数学科学系 \\ \texttt{cht24@mails.tsinghua.edu.cn}}
+\date{\today}
+
+\begin{document}
+
+\maketitle 
+
+\begin{problem}[\heiti 习题 $\mathbf{1}$ ]
+    \kaishu
+    定义矩阵值函数
+    $$
+    A(t):=\left[\begin{array}{cc}
+    t^2 & -1 \\
+    2 t & 0
+    \end{array}\right] .
+    $$
+    考虑线性方程 $\dot{x}=A(t) x$ .
+
+    1)验证 $\phi(t):=\left(1, t^2\right)^t$ 是方程的解.
+
+    2)做如下变量替换：
+    $$
+    x=\left[\begin{array}{cc}
+    1 & 0 \\
+    t^2 & 1
+    \end{array}\right] y
+    $$
+    写出 $y$ 满足的微分方程.
+
+    3)求解2)中得到的微分方程.并得到原方程的一个解.
+
+    4)求原方程的一组基.
+
+\end{problem}
+
+\begin{solution}
+    1) 直接计算可得
+        $$
+        \dot{\phi}(t)=\left[\begin{array}{c}
+        0 \\
+        2 t
+        \end{array}\right]=A(t) \phi(t) .
+        $$
+    
+    2)由变量替换可得
+        $$
+        \dot{x}=\left[\begin{array}{cc}
+        1 & 0 \\
+        t^2 & 1
+        \end{array}\right] \dot{y}+\left[\begin{array}{cc}
+        0 & 0 \\
+        2 t & 0
+        \end{array}\right] y .
+        $$
+        将其代入原方程 $\dot{x}=A(t) x$ 可得
+        $$
+        \left[\begin{array}{cc}
+        1 & 0 \\
+        t^2 & 1
+        \end{array}\right] \dot{y}+\left[\begin{array}{cc}
+        0 & 0 \\
+        2 t & 0
+        \end{array}\right] y=A(t)\left[\begin{array}{cc}
+        1 & 0 \\
+        t^2 & 1
+        \end{array}\right] y=\left[\begin{array}{cc}
+        0 & -1 \\
+        2 t & 0
+        \end{array}\right] y .
+        $$
+        整理可得
+        $$
+        \dot{y}=\left[\begin{array}{cc}
+        0 & -1 \\
+        0 & -t^2
+        \end{array}\right] y .
+        $$
+
+    3)将 $y=\left(y_1, y_2\right)^t$ 带入上式可得方程组
+        $$
+        \left\{\begin{array}{l}
+        \dot{y}_1=-y_2 \\
+        \dot{y}_2=-t^2 y_2
+        \end{array}\right. .
+        $$
+        解出 $y_2(t)=c_2 e^{-\frac{t^3}{3}}$, 进而解出 $y_1(t)=c_1+c_2 \int_0^t e^{-\frac{s^3}{3}} \mathrm{d} s$.从而
+        $$
+        y(t)=\left(c_1+c_2 \int_0^t e^{-\frac{s^3}{3}} \mathrm{d} s, c_2 e^{-\frac{t^3}{3}}\right)^t .
+        $$
+        代入变量替换可得原方程的一个解为
+        $$
+        x(t)=\left[\begin{array}{c}
+        c_1+c_2 \int_0^t e^{-\frac{s^3}{3}} \mathrm{d} s \\
+        t^2\left(c_1+c_2 \int_0^t e^{-\frac{s^3}{3}} \mathrm{d} s\right)+c_2 e^{-\frac{t^3}{3}}
+        \end{array}\right] .
+        $$
+
+\end{solution}
+
+\begin{problem}[\heiti 习题 $\mathbf{2}$ ]
+    \kaishu
+    求系统 $\dot{x}=\left[\begin{array}{ll}
+    1 & t \\
+    0 & 2
+    \end{array}\right] x$ 的流 $\Pi(t, s)$ .
+\end{problem}
+
+\begin{solution}
+    设 $\Pi(t, s)=\left[\begin{array}{ll}
+    a(t, s) & b(t, s) \\
+    c(t, s) & d(t, s)
+    \end{array}\right]$, 则由流的定义可知 $\Pi(t, s)$ 满足微分方程
+    $$
+    \frac{\partial}{\partial t} \Pi(t, s)=\left[\begin{array}{ll}
+    1 & t \\
+    0 & 2
+    \end{array}\right] \Pi(t, s)
+    $$
+    且初值条件为 $\Pi(s, s)=I$.将 $\Pi(t, s)$ 代入上式可得方程组
+    $$
+    \left\{\begin{array}{l}
+    \frac{\partial}{\partial t} a(t, s)=a(t, s)+t c(t, s) \\
+    \frac{\partial}{\partial t} b(t, s)=b(t, s)+t d(t, s) \\
+    \frac{\partial}{\partial t} c(t, s)=0\\
+    \frac{\partial}{\partial t} d(t, s)=2 d(t, s)
+    \end{array}\right.
+    $$
+    直接解出 $c(t, s)=0$, $d(t, s)=e^{2(t-s)}$. 将其代入前两式可得方程组
+    $$
+    \left\{\begin{array}{l}
+    \frac{\partial}{\partial t} a(t, s)=a(t, s)\\
+    \frac{\partial}{\partial t} b(t, s)=b(t, s)+t e^{2(t-s)}
+    \end{array}\right.
+    $$
+    结合初值条件 $a(s, s)=1$, $b(s, s)=0$ 可解出
+    $$
+    a(t, s)=e^{t-s}, \quad b(t, s)=\int_s^t e^{t-\tau} \tau e^{2(\tau-s)} \mathrm{d} \tau=(t-1)e^{2(t-s)}-(s-1)e^{t-s}.
+    $$
+    因此流为
+    $$
+    \Pi(t, s)=\left[\begin{array}{cc}
+    e^{t-s} & (t-1)e^{2(t-s)}-(s-1)e^{t-s} \\
+    0 & e^{2(t-s)}
+    \end{array}\right] .
+    $$
+\end{solution}
+
+\begin{problem}[\heiti 习题 $\mathbf{3}$ ]
+    \kaishu 
+    验证讲义第四部分性质 13 证明过程中的等式
+    $$
+    e^{\mu I_m+B}=J_\lambda(m).
+    $$
+\end{problem}
+
+\begin{solution}
+    这里令$N_m=J_\lambda(m)-\lambda I_m$. 
+    于是$B$的定义为
+    $$
+    B=\sum_{k=1}^{m-1}(-1)^{k+1} \frac{N_m^k}{k\lambda^k}.
+    $$
+    由形式幂级数的知识可知
+    $$
+    e^{\ln (1+x)}=\sum_{n=0}^{\infty} \frac{(\ln (1+x))^n}{n!}=\sum_{n=0}^\infty\frac{1}{n!}(\sum_{k=1}^\infty (-1)^{k+1}\frac{x^n}{k})=1+x.
+    $$
+    那么将$x$替换为$\frac{N_m}{\lambda}$, 则有
+    $$
+    e^{\sum_{k=1}^{\infty}(-1)^{k+1} \frac{N_m^k}{k\lambda^k}}=I_m+\frac{N_m}{\lambda}.
+    $$
+    而又$N_m$为$m$阶幂零矩阵, 因此$N_m^m=0$, 所以
+    $$
+    B=\sum_{k=1}^{m-1}(-1)^{k+1} \frac{N_m^k}{k\lambda^k}=\sum_{k=1}^{\infty}(-1)^{k+1} \frac{N_m^k}{k\lambda^k}.
+    $$
+    因此有
+    $$
+    e^{B}=I_m+\frac{N_m}{\lambda}.
+    $$
+    于是
+    $$
+    e^{\mu I_m+B}=e^{\mu I_m} \cdot e^{B}=\lambda I_m \cdot \left( I_m+\frac{N_m}{\lambda} \right)=\lambda I_m + N_m=J_\lambda(m).
+    $$
+\end{solution}
+
+
+
+\begin{problem}[\heiti 习题 $\mathbf{4}$ ]
+    \kaishu
+    本题的目的是证明性质 14.
+
+    1) 设 $A, B \in M_d(\mathbb{R})$ 且 $A=e^B$ .设 $\lambda<0$ 是 $A$ 的特征值.证明 $B$ 有形如
+    $$
+    \log (-\lambda) \pm(2 k+1) \pi i, k \in \mathbb{Z}
+    $$
+    的一对特征根.由此证明：若 $J_\lambda(m)$ 出现在 $A$ 的 Jordan标准型中, 则其必出现偶数次.
+
+    2) 设 $a, b \in \mathbb{R}$ 且 $b \neq 0$ , 则存在 $D \in M_2(\mathbb{R})$ 使得
+    $$
+    \left[\begin{array}{cc}
+    a & b \\
+    -b & a
+    \end{array}\right]=e^D .
+    $$
+    特别的, 存在 $D \in M_2(\mathbb{R})$ 使得 $e^D=-I_2$ .
+
+    3) 证明如下两个矩阵相似：
+    $$
+    \left[\begin{array}{ll}
+    J_\lambda(m) & \\
+    & J_\lambda(m)
+    \end{array}\right] ;\left[\begin{array}{ccccc}
+    \lambda I_2 & I_2 & & & \\
+    & \lambda I_2 & I_2 & & \\
+    & & \ddots & \ddots & \\
+    & & & \lambda I_2 & I_2 \\
+    & & & & \lambda I_2
+    \end{array}\right]
+    $$
+
+    4) 设 $C, D \in M_2(\mathbb{R})$ 使得 $C=e^D$ , 则存在 $B \in M_{2 m}(\mathbb{R})$ 使得
+    $$
+    \left[\begin{array}{ccccc}
+    C & I_2 & & & \\
+    & C & I_2 & & \\
+    & & \ddots & \ddots & \\
+    & & & C & I_2 \\
+    & & & & C
+    \end{array}\right]=e^B
+    $$
+
+    5) 证明性质 14 .
+\end{problem}
+
+\begin{proof}
+    1)  $\lambda<0$ 是 $A$ 的特征值, 则也是$e^B$的特征值.
+    而$e^B$的特征值为$e^{\mu}$, 其中$\mu$是$B$的特征值.
+    因此存在$B$的特征值$\mu$使得$e^{\mu}=\lambda$. 
+    又实矩阵的复特征根成对出现, 从而$B$有形如
+    $$
+    \mu=\log(-\lambda)\pm (2k+1)\pi i, k\in\Z
+    $$
+    的一对特征根.
+    从而 $B$ 有一对形如 $\log (-\lambda) \pm(2 k+1) \pi i, k \in \mathbb{Z}$ 的共轭复特征根. 
+
+    设$J_\mu(m)$是$B$的Jordan标准型中的一个Jordan块, 则由性质13可知$J_\lambda(m)$是$A$的Jordan标准型中的一个Jordan块.
+    由于$\mu$为复数, 则其共轭复数$\overline{\mu}$也是$B$的特征值, 因此$B$的Jordan标准型中也有$J_{\overline{\mu}}(m)$这个Jordan块.
+    由性质13可知$J_\lambda(m)$也是$A$的Jordan标准型中的一个Jordan块.
+    因此, $J_\lambda(m)$在$A$的Jordan标准型中成对出现.
+    
+    2)  设 $D=\left[\begin{array}{cc}
+        \log \sqrt{a^2+b^2} & \theta \\
+        -\theta & \log \sqrt{a^2+b^2}
+        \end{array}\right]$, 其中 $\theta=\arctan \frac{b}{a}(+\pi)$, 可视情况任取. 则直接计算可得
+        $$
+        e^D=e^{(\log\sqrt{a^2+b^2})\cdot I+\begin{pmatrix}
+        0 & \theta \\
+        -\theta & 0
+        \end{pmatrix}}=\left[\begin{array}{cc}
+        \sqrt{a^2+b^2} \cos \theta & \sqrt{a^2+b^2} \sin \theta \\
+        -\sqrt{a^2+b^2} \sin \theta & \sqrt{a^2+b^2} \cos \theta
+        \end{array}\right]=\left[\begin{array}{cc}
+        a & b \\
+        -b & a
+        \end{array}\right] .
+        $$
+        特别地, 取 $a=-1, b=0,(\theta=-\pi)$ 即可得到 $e^D=-I_2$ .
+
+    3)  记前者为$A$, 后者为$B$. 设$J=J_0(2m)$, 则$B=\lambda I_{2m}+J^2$. 
+        由于$r(J^2)=2m-2$, 因此$J^2$的关于特征值0的几何重数为2, 故其有两个关于特征值0的Jordan块.
+        又$J^2$的极小多项式为$t^m$, 故每个Jordan块的阶数不超过$m$. 
+        因此$J^2$的Jordan标准型恰为两个关于特征值0的阶为$m$的Jordan块, 即$\text{diag}\{J_0(m),J_0(m)\}$.
+
+        故存在$P$使得$P^{-1}J^2P=\text{diag}\{J_0(m),J_0(m)\}$.
+        因此, $P^{-1}BP=\lambda I_{2m}+P^{-1}J^2P=\text{diag}\{J_\lambda(m),J_\lambda(m)\}=A$. 两矩阵相似.
+
+    \begin{note}
+        也可以用基变换的观点来看, 假设$A$是在基$\{e_1,\cdots,e_m,e_{m+1},\cdots,e_{2m}\}$下的矩阵, 那么$B$是在基$\{e_1,e_{m+1},e_2,e_{m+2},\cdots,e_m,e_{2m}\}$下的矩阵.
+    \end{note}
+
+    4)  定义 $m \times m$ 矩阵
+        $$
+        N = \begin{bmatrix}
+        0 & 1 & & & \\
+        & 0 & 1 & & \\
+        & & \ddots & \ddots & \\
+        & & & 0 & 1 \\
+        & & & & 0
+        \end{bmatrix}.
+        $$
+        则 $M$ 可表示为
+        $$
+        M = I_m \otimes C + N \otimes I_2,
+        $$
+        其中 $\otimes$ 表示 Kronecker 积. 
+
+        由于 $I_m \otimes C$ 与 $N \otimes I_2$ 可交换：
+        $$
+        (I_m \otimes C)(N \otimes I_2) = N \otimes C = (N \otimes I_2)(I_m \otimes C),
+        $$
+        我们有
+        $$
+        M = (I_m \otimes C)(I_m \otimes I_2 + N \otimes C^{-1}).
+        $$
+        令
+        $$
+        X = I_m \otimes I_2 + N \otimes C^{-1}.
+        $$
+        由于 $N$ 是幂零矩阵（$N^m = 0$）, 矩阵 $N \otimes C^{-1}$ 也是幂零的, 故 $X - I$ 是幂零的. 
+        因此, 由性质13, 对数
+        $$
+        \log X = \sum_{k=1}^{m-1} (-1)^{k+1} \frac{(N \otimes C^{-1})^k}{k}
+        $$
+        收敛且为实矩阵. 
+
+        又因 $C = e^D$, 有
+        $$
+        \log(I_m \otimes C) = I_m \otimes D.
+        $$
+        定义
+        $$
+        B = I_m \otimes D + \log X.
+        $$
+        由于 $I_m \otimes D$ 与 $X$ 可交换（因 $D$ 与 $C$ 可交换, 故与 $C^{-1}$ 可交换）, 有
+        $$
+        e^B = e^{I_m \otimes D + \log X} = e^{I_m \otimes D} e^{\log X} = (I_m \otimes e^D) \cdot X = (I_m \otimes C) \cdot X = M.
+        $$
+        故存在 $B \in M_{2m}(\mathbb{R})$ 使得 $e^B = M$. 
+
+    5)  性质14陈述如下:
+
+    设 $A \in M_d(\mathbb{R})$ 可逆。
+
+    1）存在 $B \in M_d(\mathbb{R})$ 使得 $A=e^B$ 当且仅当若 $\lambda<0$ 是 $A$ 的特征值且 $J_\lambda(m)$ 出现在 $A$ 的 Jordan标准型中，则其必出现偶数次。
+
+    2）若 $A$ 无负特征值，则存在 $B \in M_d(\mathbb{R})$ 使得 $A=e^B$ 。
+
+    3）必存在 $B \in M_d(\mathbb{R})$ 使得 $A^2=e^B$ 。
+    
+    证明:  
+    
+    1) 必要性已在 1) 中证明.
+
+        充分性: 设 $A$ 的 Jordan 标准型为 $\text{diag}\{J_{\lambda_1}(m_1), J_{\lambda_2}(m_2), \cdots, J_{\lambda_k}(m_k)\}$. 由假设可知, 若 $\lambda_i<0$, 则 $J_{\lambda_i}(m_i)$ 必出现偶数次. 
+        
+        由3), 可知
+        $$
+        \begin{bmatrix}
+        J_{\lambda_i}(m_i) & \\
+        & J_{\lambda_i}(m_i)
+        \end{bmatrix};\begin{bmatrix}
+        \lambda_i I_2 & I_2 & & & \\
+        & \lambda_i I_2 & I_2 & & \\
+        & & \ddots & \ddots & \\
+        & & & \lambda_i I_2 & I_2 \\
+        & & & & \lambda_i I_2
+        \end{bmatrix}
+        $$
+        两者相似. 由2), 可知存在 $D_i \in M_2(\mathbb{R})$ 使得
+        $$
+        e^{D_i}=(-\lambda_i)\cdot (-I_2).
+        $$
+        最后由4), 可知存在 $B_i \in M_{2 m_i}(\mathbb{R})$ 使得
+        $$
+        \begin{bmatrix}
+        \lambda_i I_2 & I_2 & & & \\
+        & \lambda_i I_2 & I_2 & & \\
+        & & \ddots & \ddots & \\
+        & & & \lambda_i I_2 & I_2 \\
+        & & & & \lambda_i I_2
+        \end{bmatrix}=e^{B_i} .
+        $$
+        因此, 若 $\lambda_i<0$, 则存在 $B_i \in M_{2 m_i}(\mathbb{R})$ 使得
+        $$
+        \begin{bmatrix}
+        J_{\lambda_i}(m_i) & \\
+        & J_{\lambda_i}(m_i)
+        \end{bmatrix}=e^{B_i} .
+        $$
+        若 $\lambda_i>0$, 则由性质 13 可知存在 $B_i \in M_{m_i}(\mathbb{R})$ 使得
+        $$
+        J_{\lambda_i}(m_i)=e^{B_i} .
+        $$
+        于是, 将所有 $B_i$ 组成对角矩阵, 则存在 $B \in M_d(\mathbb{R})$ 使得
+        $$
+        A=e^B .
+        $$
+        综上所述, 充分性得证.
+        
+        2)  设 $A$ 的 Jordan 标准型为 $\text{diag}\{J_{\lambda_1}(m_1), J_{\lambda_2}(m_2), \cdots, J_{\lambda_k}(m_k)\}$, 其中 $\lambda_i>0$ .由性质 13 可知 $B$ 的 Jordan 标准型为 $\text{diag}\{J_{\log \lambda_1}(m_1), J_{\log \lambda_2}(m_2), \cdots, J_{\log \lambda_k}(m_k)\}$ .因此, 若 $A$ 无负特征值, 则存在 $B \in M_d(\mathbb{R})$ 使得 $A=e^B$ .
+
+        3)  设 $A$ 的 Jordan 标准型为 $\text{diag}\{J_{\lambda_1}(m_1), J_{\lambda_2}(m_2), \cdots, J_{\lambda_k}(m_k)\}$ .由性质 13 可知 $A^2$ 的 Jordan 标准型为 $\text{diag}\{J_{\lambda_1^2}(m_1), J_{\lambda_2^2}(m_2), \cdots, J_{\lambda_k^2}(m_k)\}$ .由于 $\lambda_i^2>0$, 由2) 可知存在 $B \in M_d(\mathbb{R})$ 使得 $A^2=e^B$ .
+
+    \begin{note}
+        显然2),3)是1)的直接推论.
+    \end{note}
+
+\end{proof}
+
+\begin{problem}[\heiti 习题 $\mathbf{5}$ ]
+
+    \kaishu
+    1) 设 $A, B \in M_d(\mathbb{C})$ 且 $A=e^B$ . 证明 $A$ 可对角化当且仅当 $B$ 可对角化. 
+
+    2) 设 $A \in M_d(\mathbb{C})$ 可逆. 证明 $A$ 可对角化当且仅当 $A^2$ 可对角化. 
+    （注：此二性质用在了定理 7 的证明过程中）
+\end{problem}
+
+\begin{solution}
+    1)  设 $A$ 可对角化, 则 $A$ 的 Jordan 标准型中所有 Jordan 块均为 $1 \times 1$ 阶.由性质 13 可知 $B$ 的 Jordan 标准型中对应的 Jordan 块也均为 $1 \times 1$ 阶, 因此 $B$ 可对角化.
+
+        反之, 设 $B$ 可对角化, 则 $B$ 的 Jordan 标准型中所有 Jordan 块均为 $1 \times 1$ 阶.由性质 13 可知 $A$ 的 Jordan 标准型中对应的 Jordan 块也均为 $1 \times 1$ 阶, 因此 $A$ 可对角化.
+
+    2)  设 $A$ 可对角化, 则 $A$ 的 Jordan 标准型中所有 Jordan 块均为 $1 \times 1$ 阶.由于平方运算不会改变 Jordan 块的阶数, 因此 $A^2$ 的 Jordan 标准型中所有 Jordan 块也均为 $1 \times 1$ 阶, 因此 $A^2$ 可对角化.
+
+        反之, 设 $A^2$ 可对角化, 则 $A^2$ 的 Jordan 标准型中所有 Jordan 块均为 $1 \times 1$ 阶.由于平方运算不会改变 Jordan 块的阶数, 因此 $A$ 的 Jordan 标准型中对应的 Jordan 块也均为 $1 \times 1$ 阶, 因此 $A$ 可对角化.
+\end{solution}
+
+\end{document}

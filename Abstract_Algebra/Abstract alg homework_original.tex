@@ -1,0 +1,75 @@
+% !TEX program = xelatex  % 指定编译器为 XeLaTeX（针对某些编辑器）
+
+%% 1. 文档类：确定了文档的基本结构
+% [a4paper] 纸张尺寸为 A4
+% [12pt] 正文字号为 12pt
+% [UTF8] 指定编码
+% [heading=true] 开启章节标题格式设置
+% [scheme=chinese] 设置中文排版方案
+\documentclass[a4paper, 12pt, UTF8, heading=true, scheme=chinese]{ctexart}
+
+%% 2. 页面布局与几何设置：使用 geometry 宏包
+% [a4paper] 再次确保纸张为 A4
+% [left=3cm, right=2.5cm, top=2.5cm, bottom=2.5cm] 设置页边距
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+
+%% 3. 数学相关宏包
+\usepackage{amsmath}    % 美国数学学会宏包，提供强大的数学环境
+\usepackage{amssymb}   % 提供丰富的数学符号
+\usepackage{bm}        % 提供加粗的数学符号（如向量 \bm{x}）
+
+%% 4. 图形与颜色
+\usepackage{graphicx}  % 插入图片（\includegraphics）
+\usepackage{xcolor}    % 支持颜色定义和使用（\textcolor{red}{Red Text}）
+\usepackage{tikz}      % 强大的绘图宏包，用于创建矢量图形
+
+%% 5. 表格与排版工具
+\usepackage{array}     % 增强表格功能
+\usepackage{booktabs}  % 提供美观的三线表命令（\toprule, \midrule, \bottomrule）
+\usepackage{multicol}  % 支持多栏排版
+\usepackage{multirow}  % 支持表格中的跨行单元格
+
+\usepackage{titlesec}
+
+% 设置 section 格式为左对齐
+\titleformat{\section}
+  {\normalfont\Large\bfseries\raggedright}
+  {}
+  {0pt}
+  {}
+
+%% 6. 超链接与参考文献（后端使用 biber）
+% [colorlinks=true, linkcolor=blue, urlcolor=cyan, citecolor=magenta] 将链接染上颜色
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=cyan, citecolor=magenta]{hyperref}
+\usepackage[backend=biber, style=gb7714-2015]{biblatex} % 使用biblatex处理参考文献，国标样式
+\addbibresource{references.bib} % 指定参考文献数据库文件
+
+%% 7. 算法与代码列表
+\usepackage[ruled, lined]{algorithm2e} % 编写算法伪代码
+\usepackage{listings} % 插入程序代码片段
+
+%% 8. 自定义命令与环境（提高效率）
+% 定义一个用于数学中“实数集”的快捷命令
+\newcommand{\R}{\mathbb{R}}
+% 定义一个用于输入作业“解”的环境
+\newenvironment{solution}{\par\noindent\textbf{解：}\par}{\hfill$\square$\par}
+\newenvironment{proof}{\par\noindent\textbf{证明：}}{\hfill$\square$\par}
+\newenvironment{problem}[1][]{\par\noindent\textmd{#1}\par}{}
+
+%% 9. 全局格式设置
+% 设置行距为1.5倍
+\linespread{1.5}
+% 设置段落首行缩进2个汉字宽度（ctex宏包已自动处理，此为例子）
+%\setlength{\parindent}{2em}
+
+%% 10. 文档元信息
+\title{\textbf{群与 Galois 理论 \\ 作业1}} % 使用加粗的标题
+\author{陈宏泰 \\ 清华大学数学科学系 \\ \texttt{cht24@mails.tsinghua.edu.cn}}
+\date{\today} % 自动生成当前日期
+
+%% 导言区结束
+\begin{document}
+
+\maketitle 
+
+\end{document}

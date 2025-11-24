@@ -1,0 +1,2 @@
+\contentsline {section}{\numberline {1}A. 分式域的推广: 局部化}{2}{section.1}%
+\contentsline {section}{\numberline {2}B. $\mathbb {Z}[\sqrt {d}]^\times $ 与Pell方程, $d\neq \square , d>0$}{13}{section.2}%
